@@ -20,7 +20,7 @@ const Layout = () => {
       <Stack.Screen
         name="home"
         options={{
-          title: "🗞️ Notícias",
+          title: "📰 Notícias",
           headerRight: () => (
             <TouchableOpacity
               onPress={() => router.replace("/")}
