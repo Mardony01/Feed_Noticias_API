@@ -1,6 +1,15 @@
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useLoginViewModel } from "../viewmodel/UserLoginViewModel";
 
@@ -28,52 +37,78 @@ export default function Index() {
   }
 
   return (
-    <View style={styles.container}>
-      <Ionicons name="newspaper-outline" size={80} color="#007AFF" style={{ marginBottom: 10 }} />
-      <Text style={styles.title}>MDN Notice</Text>
-      <Text style={styles.subtitle}>Acesse sua conta</Text>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <ScrollView
+        contentContainerStyle={styles.scrollContainer}
+        keyboardShouldPersistTaps="handled"
+      >
+        <View style={styles.container}>
+          <Ionicons
+            name="newspaper-outline"
+            size={80}
+            color="#007AFF"
+            style={{ marginBottom: 10 }}
+          />
+          <Text style={styles.title}>MDN Notice</Text>
+          <Text style={styles.subtitle}>Acesse sua conta</Text>
 
-      <View style={styles.form}>
-        <TextInput
-          style={styles.input}
-          placeholder="Email"
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
-          autoCapitalize="none"
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Senha"
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry
-        />
+          <View style={styles.form}>
+            <TextInput
+              style={styles.input}
+              placeholder="Email"
+              value={email}
+              onChangeText={setEmail}
+              keyboardType="email-address"
+              autoCapitalize="none"
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Senha"
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry
+            />
 
-        <TouchableOpacity style={styles.button} onPress={() => handleLogin(email, password)}>
-          <Text style={styles.buttonText}>Entrar</Text>
-        </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => handleLogin(email, password)}
+            >
+              <Text style={styles.buttonText}>Entrar</Text>
+            </TouchableOpacity>
 
-        {error ? <Text style={styles.error}>⚠️ {error}</Text> : null}
-      </View>
+            {error ? <Text style={styles.error}>⚠️ {error}</Text> : null}
+          </View>
 
-      <View style={styles.testInfo}>
-        <Text style={styles.testTitle}>🧪 Login de Teste</Text>
-        <Text style={styles.testText}>Email: <Text style={styles.bold}>Noobmaster69 </Text></Text>
-        <Text style={styles.testText}>Senha: <Text style={styles.bold}>entradaUSB</Text></Text>
-      </View>
-    </View>
+          <View style={styles.testInfo}>
+            <Text style={styles.testTitle}>🧪 Login de Teste</Text>
+            <Text style={styles.testText}>
+              Email: <Text style={styles.bold}>Noobmaster69</Text>
+            </Text>
+            <Text style={styles.testText}>
+              Senha: <Text style={styles.bold}>entradaUSB</Text>
+            </Text>
+          </View>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
-  // Layout principal
+  scrollContainer: {
+    flexGrow: 1,
+  },
+
   container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#f8f9fb",
     paddingHorizontal: 20,
+    paddingVertical: 40,
   },
 
   title: {
@@ -129,7 +164,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 
-  // Splash
   splashContainer: {
     flex: 1,
     justifyContent: "center",
@@ -143,7 +177,6 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
 
-  // Card de login de teste
   testInfo: {
     marginTop: 30,
     backgroundColor: "#eaf3ff",
